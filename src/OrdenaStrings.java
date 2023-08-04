@@ -4,9 +4,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static java.util.Comparator.comparing;
+
 public class OrdenaStrings {
 
     public static void main(String[] args) {
+
+
 
         List<String> palavras = new ArrayList<>();
 
@@ -26,6 +30,9 @@ public class OrdenaStrings {
         //Nova maneira de imprimir no Java 8 com Lambda
         palavras.forEach(s -> System.out.println(s));
 
+        //imprime lista com method reference
+        palavras.forEach(System.out::println);
+
         //Antes do Java 8, ordena por ordem alfabetica
         Collections.sort(palavras);
         System.out.println(palavras);
@@ -38,11 +45,23 @@ public class OrdenaStrings {
         //Java 8, ordena por ordem de tamanho com lambda
         //Conhecendo a API, podemos utilizar o metodo compare da classe Integer
 
-        palavras.sort((s1,s2)-> Integer.compare(s1.length(),s2.length()));
 
-        // ou
+//        palavras.sort((s1, s2) -> {
+//            return Integer.compare(s1.length(), s2.length());
+//        });
 
-        palavras.sort((s1,s2)-> s1.length() - s2.length());
+        //deixando mais curto com lambda
+        palavras.sort(comparing(s->s.length()));
+
+        //deixando mais curto ainda com method reference
+        palavras.sort(comparing(String::length));
+
+        //ou
+        // desse jeito vc importa a Collection de maneira estatica
+        palavras.sort(comparing(String::length));
+
+        //ou
+        palavras.sort(String.CASE_INSENSITIVE_ORDER);
 
 
         new Thread(new Runnable() {
